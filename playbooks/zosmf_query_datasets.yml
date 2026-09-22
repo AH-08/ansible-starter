@@ -1,0 +1,35 @@
+---
+# ------------------------------------------------------------
+# Sample playbook to query datasets via z/OSMF
+# ------------------------------------------------------------
+- name: Query data sets through z/OSMF
+  hosts: zosmf
+  gather_facts: false
+
+  vars:
+    hlq: "USER01"
+    zosmf_user: "{{ zmf_user }}"
+    zosmf_password: "{{ zmf_password }}"
+
+  tasks:
+    - name: Get data sets matching the high-level qualifier
+      ansible.builtin.uri:
+        url: >-
+          https://{{ ansible_host }}/zosmf/restfiles/ds
+          ?dslevel={{ (hlq ~ '.*') | urlencode }}
+        method: GET
+        url_username: "{{ zosmf_user }}"
+        url_password: "{{ zosmf_password }}"
+        force_basic_auth: true
+        validate_certs: false
+        return_content: true
+        status_code: 200
+        headers:
+          Accept: application/json
+      register: zosmf_datasets
+      no_log: true
+
+    - name: Display matching data sets
+      ansible.builtin.debug:
+        var: zosmf_datasets.json
+

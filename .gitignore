@@ -1,0 +1,63 @@
+# Ansible retry files
+*.retry
+
+# Ansible Vault files and secrets
+*.vault
+*.vault.yml
+vault.yml
+secrets.yml
+group_vars/*/vault.yml
+host_vars/*/vault.yml
+
+# Local inventory files
+inventory
+inventory.local
+hosts
+hosts.local
+*.inventory
+
+# Ansible local state/cache
+.ansible/
+.cache/
+
+# Python virtual environments
+.venv/
+venv/
+env/
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution/build artifacts
+build/
+dist/
+*.egg-info/
+
+# Test and coverage output
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Molecule artifacts
+.molecule/
+.molecule.local/
+
+# macOS and editor files
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Temporary files
+*.log
+*.tmp
+tmp/
+

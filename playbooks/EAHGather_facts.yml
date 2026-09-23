@@ -1,3 +1,4 @@
+---
 - name: Gather z/OS facts
 
   hosts: zos

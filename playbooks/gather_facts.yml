@@ -1,6 +1,4 @@
----
 - name: Gather z/OS facts
-
   hosts: zos
   gather_facts: false
   environment: "{{ environment_vars }}"
@@ -11,7 +9,7 @@
       gather_subset: 
         -sys
        -ipl
-  register: zos_facts
+  register: lpar_name
     
   filter:
       - "*parmlib*"
@@ -19,5 +17,4 @@
 - name: Print return information from the previous task
   ansible.builtin.debug:
   msg: "the gathered facts are: {{ result }}"
-  var: zos_facts
-  verbosity: 2
+  var: lpar_name

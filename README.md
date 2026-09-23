@@ -1,5 +1,7 @@
 # Minimal Ansible project to demonstrate typical directory structure
 Testing...testing.
+Sample. Testing. Example.
+
 
 ```shell
 .

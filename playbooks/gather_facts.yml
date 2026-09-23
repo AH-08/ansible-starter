@@ -8,8 +8,8 @@
    - name: Return all available z/OS facts.
      ibm.ibm_zos_core.zos_gather_facts:
       gather_subset: 
-       -sys
-       -ipl
+        -sys
+        -ipl
      register: zos_facts
 
    - name: Print return information from the previous task

@@ -6,17 +6,18 @@
   environment: "{{ environment_vars }}"
 
   tasks:
-- name: Return all available z/OS facts.
-  ibm.ibm_zos_core.zos_gather_facts:
-    gather_subset: 
-      -sys
-      -ipl
-    register: zos_facts
-    filter:
+  - name: Return all available z/OS facts.
+    ibm.ibm_zos_core.zos_gather_facts:
+      gather_subset: 
+        -sys
+       -ipl
+  register: zos_facts
+    
+  filter:
       - "*parmlib*"
 
 - name: Print return information from the previous task
   ansible.builtin.debug:
-    msg: "the gathered facts are: {{ result }}"
-    var: zos_facts
-    verbosity: 2
+  msg: "the gathered facts are: {{ result }}"
+  var: zos_facts
+  verbosity: 2

@@ -11,7 +11,7 @@
      gather_subset: sys
      register: zOS_facts
 
-- name: Print return information from the previous task
-  ansible.builtin.debug:
-    var: zOS_facts
-    verbosity: 2
+  - name: Print return information from the previous task
+    ansible.builtin.debug:
+     var: zOS_facts
+     verbosity: 2

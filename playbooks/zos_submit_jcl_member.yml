@@ -14,8 +14,9 @@
     jcl_dataset_name: "{{ job_owner }}.DEV.JCL"
 
   tasks:
+
   - name: Submit JCL in a PDSE member.
-  zos_job_submit:
-    src: "{{ job_owner }}.DEV.JCL(HELLO)"
-    remote_src: true
-  register: job_result
+    zos_job_submit:
+      src: "{{ job_owner }}.DEV.JCL(HELLO)"
+      remote_src: true
+    register: job_result

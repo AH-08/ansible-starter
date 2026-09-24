@@ -1,0 +1,21 @@
+---
+- name: Submit JCL member to z/OS
+  hosts: zoslab
+  gather_facts: false
+  environment: "{{ environment_vars }}"
+  vars:
+    job_owner: IBMUSER
+    hlq: PLAT01
+    mlq: DEV
+    libname: JCL 
+    primary_allocation: 2
+    secondary_allocation: 4 
+    jcl_path: "{{ playbook_dir }}/tmp_jcl/rendered.jcl"
+    jcl_dataset_name: "{{ job_owner }}.DEV.JCL"
+
+  tasks:
+  - name: Submit JCL in a PDSE member.
+  zos_job_submit:
+    src: "{{ job_owner }}.DEV.JCL(HELLO)"
+    remote_src: true
+  register: job_result

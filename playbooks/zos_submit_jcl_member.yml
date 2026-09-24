@@ -21,10 +21,6 @@
     - name: Show job id
       ansible.builtin.debug:
         msg: "{{ job_result.jobs[0].job_id }}"
-    
-    - name: Show job ID and return code
-      debug:
-        msg: "Job {{ job_output.jobs[0].job_id }} completed RC={{ job_output.jobs[0].ret_code.msg }}"
 
     - name: Show spool output
       debug:

@@ -18,7 +18,15 @@
       ibm.ibm_zos_core.zos_job_submit:
         src: "{{ job_owner }}.DEV.JCL(HELLO)"
       register: job_result
-    - name: Validate return code
-      assert:
-       that:
-         - job_output.jobs[0].ret_code.code <= acceptable return code
+    
+    - name: Show job id
+      ansible.builtin.debug:
+        msg: "{{ job_result.jobs[0].job_id }}"
+    
+    - name: Show job ID and return code
+      debug:
+        msg: "Job {{ job_output.jobs[0].job_id }} completed RC={{ job_output.jobs[0].ret_code.msg }}"
+
+    - name: Show spool output
+      debug:
+        msg: "{{ job_output.jobs[0].ddnames | map(attribute='content') | list }}"

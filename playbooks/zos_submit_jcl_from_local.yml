@@ -7,9 +7,10 @@
     - ibm.ibm_zos_core
 
   tasks:
+  
   - name: Convert local JCL to IBM-1047 and submit the job.
     zos_job_submit:
-    src: ansible-starter\playbooks\Hello_JCL.txt
+    src: templates\Hello_JCL.txt
     remote_src: false
     encoding:
       from: UTF-8

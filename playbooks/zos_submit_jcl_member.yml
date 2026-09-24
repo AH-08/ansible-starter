@@ -21,7 +21,3 @@
     - name: Show job id
       ansible.builtin.debug:
         msg: "{{ job_result.jobs[0].job_id }}"
-
-    - name: Show spool output
-      debug:
-        msg: "{{ job_output.jobs[0].ddnames | map(attribute='content') | list }}"

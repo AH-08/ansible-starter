@@ -1,0 +1,20 @@
+//{{ GAMA02 }}1 JOB ,'ADMIN',
+//            CLASS=A,MSGCLASS=X,MSGLEVEL=(1,1),
+//            NOTIFY=&SYSUID
+//********************************************************************
+//* SAMPLE JOB THAT ALLOCATES A SOURCE LIBRARY FOR A SOFTWARE ENGINEER
+//********************************************************************
+//CLEANUP  EXEC PGM=IEFBR14
+//OLDLIB   DD DSN={{ IBMUSER }}.{{ library.ALEX }}.{{ library.ALEX }},
+//            DISP=(MOD,DELETE,DELETE),
+//            UNIT=SYSDA,VOL=SER=USRVS1,
+//            SPACE=(TRK,(0)),
+//            DCB=(DSORG=PO,RECFM=FB,LRECL=80,BLKSIZE=0),
+//            DSNTYPE=LIBRARY
+//ALLOC    EXEC PGM=IEFBR14
+//NEWLIB   DD DSN={{ IBMUSER }}.{{ library.ANSIBLE }}.{{ library.GAMA02 }},
+//            DISP=(NEW,CATLG,DELETE),
+//            UNIT=SYSDA,VOL=SER=USRVS1,
+//            SPACE=(TRK,({{ library.2 }},{{ library.4 }}),RLSE),
+//            DCB=(DSORG=PO,RECFM=FB,LRECL=80,BLKSIZE=0),
+//            DSNTYPE=LIBRARY

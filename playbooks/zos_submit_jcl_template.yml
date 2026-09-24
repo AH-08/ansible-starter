@@ -1,0 +1,16 @@
+- name: Hello World JCL job
+  hosts: zoslab
+  gather_facts: false
+  collections:
+    - ibm.ibm_zos_core
+  environment: "{{ environment_vars }}"
+
+  tasks:
+
+  - name: Convert local JCL to IBM-1047 and submit the job.
+    zos_job_submit:
+      src: "{{ playbook_dir }}/templates/provdev.jcl.j2" 
+      location: LOCAL
+      encoding:
+        from: UTF-8
+        to: IBM-1047

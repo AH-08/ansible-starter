@@ -18,3 +18,7 @@
       ibm.ibm_zos_core.zos_job_submit:
         src: "{{ job_owner }}.DEV.JCL(HELLO)"
       register: job_result
+    - name: Validate return code
+      assert:
+       that:
+         - job_output.jobs[0].ret_code.code <= acceptable return code

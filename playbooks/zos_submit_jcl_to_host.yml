@@ -7,8 +7,8 @@
   environment: "{{ environment_vars }}"
 
   tasks:
-  - name: Submit JCL in a PDSE member.
-    zos_job_submit:
-      src: IBMUSER.DEV.JCL(HELLO)
-      remote_src: true
-    register: response
+    - name: Submit JCL in a PDSE member.
+      zos_job_submit:
+        src: IBMUSER.DEV.JCL(HELLO)
+        remote_src: true
+      register: response

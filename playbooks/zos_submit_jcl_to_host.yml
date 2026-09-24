@@ -1,14 +1,20 @@
 ---
-- name: Hello World JCL job
+- name: Submit resolved JCL to z/OS
   hosts: zoslab
   gather_facts: false
-  collections:
-    - ibm.ibm_zos_core
   environment: "{{ environment_vars }}"
+  vars:
+    job_owner: IBMUSER
+    hlq: PLAT01
+    mlq: DEV
+    libname: JCL 
+    primary_allocation: 2
+    secondary_allocation: 4 
+    jcl_path: "{{ playbook_dir }}/tmp_jcl/rendered.jcl"
+    jcl_dataset_name: "{{ job_owner }}.TEMP.JCL"
 
   tasks:
-    - name: Submit JCL in a PDSE member.
-      zos_job_submit:
-        src: IBMUSER.DEV.JCL(HELLO)
-        remote_src: true
-      register: response
+    - name: Submit JCL from dataset
+      ibm.ibm_zos_core.zos_job_submit:
+        src: "{{ jcl_dataset_name }}"
+      register: job_result

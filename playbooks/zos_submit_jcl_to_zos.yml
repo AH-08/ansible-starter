@@ -1,0 +1,14 @@
+- name: Hello World JCL job
+  hosts: zoslab
+  gather_facts: false
+  collections:
+    - ibm.ibm_zos_core
+  environment: "{{ environment_vars }}"
+
+  tasks:
+
+- name: Submit JCL in a PDSE member.
+  zos_job_submit:
+    src: IBMUSER.DEV.JCL(HELLO)
+    remote_src: true
+  register: response

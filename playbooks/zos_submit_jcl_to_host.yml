@@ -5,8 +5,8 @@
   environment: "{{ environment_vars }}"
   vars:
     job_owner: IBMUSER
-    hlq: PLAT01
-    mlq: DEV
+    hlq: IBMUSER
+    mlq: TEMP
     libname: JCL 
     primary_allocation: 2
     secondary_allocation: 4 

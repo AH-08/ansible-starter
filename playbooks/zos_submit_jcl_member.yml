@@ -5,18 +5,17 @@
   environment: "{{ environment_vars }}"
   vars:
     job_owner: IBMUSER
-    hlq: PLAT01
-    mlq: DEV
+    hlq: IBMUSER
+    mlq: GAMA01.LAB
     libname: JCL 
     primary_allocation: 2
     secondary_allocation: 4 
-    jcl_path: "{{ playbook_dir }}/tmp_jcl/rendered.jcl"
-    jcl_dataset_name: "{{ job_owner }}.DEV.JCL"
+    jcl_dataset_name: "{{ job_owner }}.GAMA01.LAB.JCL"
 
   tasks:
     - name: Submit JCL in a PDSE member.
       ibm.ibm_zos_core.zos_job_submit:
-        src: "{{ job_owner }}.DEV.JCL(HELLO)"
+        src: "{{ job_owner }}.GAMA01.LAB.JCL(HELLO)"
       register: job_result
     
     - name: Show job id

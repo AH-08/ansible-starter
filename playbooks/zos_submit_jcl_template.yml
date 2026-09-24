@@ -9,7 +9,7 @@
 
   - name: Convert local JCL to IBM-1047 and submit the job.
     zos_job_submit:
-      src: "{{ playbook_dir }}/templates/provdev.jcl.j2" 
+      src: "{{ playbook_dir }}/provdev.jcl.j2" 
       location: LOCAL
       encoding:
         from: UTF-8

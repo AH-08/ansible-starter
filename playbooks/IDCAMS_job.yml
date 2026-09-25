@@ -23,7 +23,7 @@
         key_offset: 0
 
     - name: Drop the contents of input dataset into output dataset using REPRO command.
-      ibm.ibm_zos_core.zos_mvs_raw:
+      zos_mvs_raw:
         pgm: idcams
         auth: true
         dds:

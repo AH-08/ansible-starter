@@ -10,12 +10,6 @@
 
   tasks:
 
-  symbolic:
-    export: [HLQ]
-    set:
-      HLQ: IBMUSER
-
-  steps:
     - name: DEFKSDS
       exec:
         pgm: IDCAMS

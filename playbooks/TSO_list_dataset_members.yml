@@ -6,9 +6,9 @@
     - ibm.ibm_zos_core
   
   tasks:
-  
-    - name: Execute TSO command List Dataset(DSLIST)
+
+    - name: Execute TSO command List Dataset(LISTDSD)
       zos_tso_command:
        commands:
-          - DSLIST DATASET('SYS1.PARMLIB')
+          - LISTDSD DATASET('SYS1.PARMLIB')
        max_rc: 4

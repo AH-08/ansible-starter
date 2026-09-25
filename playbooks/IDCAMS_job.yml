@@ -23,20 +23,19 @@
         key_offset: 0
 
     - name: Drop the contents of input dataset into output dataset using REPRO command.
-      zos_mvs_raw:
-        pgm: idcams
-        auth: true
-        dds:
-          - dd_data:
-              dd_name: SYSIN
-              content: |
-                REPRO INFILE(INDD) OUTDATASET('"{{ vsam_name }}"')
-          - dd_data:
-              dd_name: INDD
-              content: |
-                0001TEST RECORD 1
-                0002TEST RECORD 2
-          - dd_output:
-              dd_name: SYSPRINT
-              return_content:
-                type: text
+      pgm: idcams
+      auth: true
+      dds:
+        - dd_data:
+            dd_name: SYSIN
+            content: |
+              REPRO INFILE(INDD) OUTDATASET('"{{ vsam_name }}"')
+        - dd_data:
+            dd_name: INDD
+            content: |
+              0001TEST RECORD 1
+              0002TEST RECORD 2
+        - dd_output:
+            dd_name: SYSPRINT
+            return_content:
+              type: text

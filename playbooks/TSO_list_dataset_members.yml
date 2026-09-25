@@ -4,8 +4,8 @@
   environment: "{{ environment_vars }}"
   
   tasks:
-  - name: Execute TSO command List Dataset (DSLIST) and allow for maximum return code of 4.
-    zos_tso_command:
-      commands:
-        - DSLIST DATASET('sys1.parmlib') ALL GENERIC
-      max_rc: 4
+   - name: Execute TSO command List Dataset (DSLIST) and allow for maximum return code of 4.
+     zos_tso_command:
+       commands:
+         - DSLIST DATASET('sys1.parmlib') ALL GENERIC
+       max_rc: 4

@@ -11,6 +11,11 @@
 
   tasks:
 
+    - name: Delete KSDS if exists
+      zos_data_set:
+        name: "{{ vsam_name }}"
+        state: absent
+
     - name: Create KSDS
       zos_data_set:
         name: "{{ vsam_name }}"
@@ -31,12 +36,26 @@
         var: ksds_file
 
     - name: Load KSDS records
-      zos_encode:
-        src: "{{ playbook_dir }}/templates/KSDS_records.txt"
-        dest: "{{ vsam_name }}"
-        encoding:
-          from: UTF-8
-          to: IBM-1047
+      zos_mvs_raw:
+        pgm: idcams
+        auth: true
+        dds:
+          - dd_data_set:
+              dd_name: INPUT
+              data_set_name: "{{ vsam_name }}"
+          - dd_data_set:
+              dd_name: OUTPUT
+              data_set_name: "{{ vsam_name }}"
+          - dd_input:
+              dd_name: sysin
+              content: |
+                " REPRO -
+                  INFILE(0001TEST RECORD 1) - 
+                  OUTFILE(0002TEST RECORD 2)"
+          - dd_output:
+              dd_name: sysprint
+              return_content:
+                type: text
 
     - name: Fetch KSDS records
       zos_fetch:

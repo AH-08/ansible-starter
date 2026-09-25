@@ -50,8 +50,8 @@
               dd_name: sysin
               content: |
                 " REPRO -
-                  INFILE(0001TEST RECORD 1) - 
-                  OUTFILE(0002TEST RECORD 2)"
+                  0001TEST RECORD 1 
+                  0002TEST RECORD 2"
           - dd_output:
               dd_name: sysprint
               return_content:

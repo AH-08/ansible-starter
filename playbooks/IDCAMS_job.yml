@@ -11,6 +11,7 @@
     secondary_allocation: 4
     jcl_path: "{{ playbook_dir }}/templates/IDCAMS.jcl"
     jcl_dataset_name: "{{ job_owner }}.TEMP02.JCL"
+
   tasks:
     - name: Covert local JCL to IBM-1047 and submit
       zos_job_submit:

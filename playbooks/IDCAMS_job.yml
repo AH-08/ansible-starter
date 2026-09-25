@@ -9,33 +9,45 @@
     vsam_name: IBMUSER.TEST02.KSDS
 
   tasks:
-    - name: Create VSAM KSDS
-      zos_data_set:
-        name: "{{ vsam_name }}"
-        type: ksds
-        state: present
-        record_format: fb
-        record_length: 80
-        space_primary: 2
-        space_secondary: 2
-        space_type: cyl
-        key_length: 4
-        key_offset: 0
 
-    - name: Drop the contents of input dataset into output dataset using REPRO command.
-      pgm: idcams
-      auth: true
-      dds:
-        - dd_data:
-            dd_name: SYSIN
-            content: |
-              REPRO INFILE(INDD) OUTDATASET('"{{ vsam_name }}"')
-        - dd_data:
-            dd_name: INDD
-            content: |
-              0001TEST RECORD 1
-              0002TEST RECORD 2
-        - dd_output:
-            dd_name: SYSPRINT
-            return_content:
-              type: text
+  symbolic:
+    export: [HLQ]
+    set:
+      HLQ: IBMUSER
+
+  steps:
+    - name: DEFKSDS
+      exec:
+        pgm: IDCAMS
+      dd:
+        - name: SYSPRINT
+          sysout: "*"
+        - name: SYSOUT
+          sysout: "*"
+        - name: INDD
+          inline: |
+            0001TEST RECORD 1
+            0002TEST RECORD 2
+        - name: SYSIN
+          symbols: JCLONLY
+          inline: |
+            DELETE &HLQ..TEST.KSDS
+            IF LASTCC < 9 THEN -
+              DEFINE CLUSTER( -
+                NAME(&HLQ..TEST.KSDS) -
+                RECORDSIZE(80 80) -
+                CYLINDERS(2 1) -
+                CISZ(4096) -
+                INDEXED -
+                KEYS(4 0) -
+              ) -
+              DATA( -
+                NAME(&HLQ..TEST.KSDS.DATA) -
+              ) -
+              INDEX( -
+                NAME(&HLQ..TEST.KSDS.INDEX) -
+              )
+              IF LASTCC = 0 THEN -
+                REPRO INFILE(INDD) OUTDATASET(&HLQ..TEST.KSDS)
+              IF LASTCC = 0 THEN -
+                PRINT INDATASET(&HLQ..TEST.KSDS) CHAR

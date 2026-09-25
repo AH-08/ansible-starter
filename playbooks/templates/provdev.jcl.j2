@@ -1,6 +1,8 @@
 //{{ GAMA02 }}1 JOB ,'ADMIN',
-//            CLASS=A,MSGCLASS=X,MSGLEVEL=(1,1),
-//            NOTIFY=&SYSUID
+//                  CLASS=A,MSGCLASS=X,MSGLEVEL=(1,1),
+//                  NOTIFY=&SYSUID
+// EXPORT SYMLIST=(HLQ)
+// SET HLQ=PLAT01
 //********************************************************************
 //* SAMPLE JOB THAT ALLOCATES A SOURCE LIBRARY FOR A SOFTWARE ENGINEER
 //********************************************************************
@@ -12,7 +14,7 @@
 //            DCB=(DSORG=PO,RECFM=FB,LRECL=80,BLKSIZE=0),
 //            DSNTYPE=LIBRARY
 //ALLOC    EXEC PGM=IEFBR14
-//NEWLIB   DD DSN={{ IBMUSER }}.{{ library.ANSIBLE }}.{{ library.GAMA02 }},
+//NEWLIB   DD DSN={{ IBMUSER }}.{{ library.TEMP02 }}.{{ library.JCL }},
 //            DISP=(NEW,CATLG,DELETE),
 //            UNIT=SYSDA,VOL=SER=USRVS1,
 //            SPACE=(TRK,({{ library.2 }},{{ library.4 }}),RLSE),

@@ -37,7 +37,7 @@
     
     - name: Copy records to input sequential data set
       zos_copy:
-        src: "{{ playbook_dir }}/KSDS_records.txt"
+        src: "{{ playbook_dir }}/templates/KSDS_records.txt"
         dest: "{{ vsam_name }}.INPUT"
         encoding:
           from: UTF-8

@@ -1,4 +1,4 @@
-//{{ GAMA02 }}1 JOB ,'ADMIN',
+//{{ JOB_OWNER }}1 JOB ,'ADMIN',
 //                  CLASS=A,MSGCLASS=X,MSGLEVEL=(1,1),
 //                  NOTIFY=&SYSUID
 // EXPORT SYMLIST=(HLQ)
@@ -7,7 +7,7 @@
 //* SAMPLE JOB THAT ALLOCATES A SOURCE LIBRARY FOR A SOFTWARE ENGINEER
 //********************************************************************
 //CLEANUP  EXEC PGM=IEFBR14
-//OLDLIB   DD DSN={{ IBMUSER }}.{{ library.ALEX }}.{{ library.ALEX }},
+//OLDLIB   DD DSN={{ IBMUSER }}.{{ library.TEMP02 }}.{{ library.JCL }},
 //            DISP=(MOD,DELETE,DELETE),
 //            UNIT=SYSDA,VOL=SER=USRVS1,
 //            SPACE=(TRK,(0)),

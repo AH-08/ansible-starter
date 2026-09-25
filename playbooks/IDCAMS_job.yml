@@ -12,12 +12,13 @@
     secondary_allocation: 4 
     jcl_path: "{{ playbook_dir }}/templates/IDCAMS.jcl"
     jcl_dataset_name: "{{ job_owner }}.TEMP02.JCL"
+
   tasks:
 
-  - name: Convert local JCL to IBM-1047 and submit the job.
-    zos_job_submit:
-      src: "{{ playbook_dir }}/IDCAMS.jcl" 
-      location: LOCAL
-      encoding:
-        from: UTF-8
-        to: IBM-1047
+    - name: Convert local JCL to IBM-1047 and submit the job.
+      zos_job_submit:
+        src: "{{ playbook_dir }}/IDCAMS.jcl" 
+        location: LOCAL
+        encoding:
+          from: UTF-8
+          to: IBM-1047

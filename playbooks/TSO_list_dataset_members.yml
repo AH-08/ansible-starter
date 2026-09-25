@@ -4,7 +4,6 @@
   environment: "{{ environment_vars }}"
   
   tasks:
-
   - name: Execute TSO command List Dataset (DSLIST) and allow for maximum return code of 4.
     zos_tso_command:
       commands:

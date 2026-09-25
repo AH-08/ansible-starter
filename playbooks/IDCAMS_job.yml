@@ -1,3 +1,4 @@
+---
 - name: Submit resolved JCL to z/OS
   hosts: zoslab
   gather_facts: false
@@ -10,38 +11,35 @@
 
   tasks:
 
-    - name: DEFKSDS
-      exec:
-        pgm: IDCAMS
-      dd:
-    - name: SYSPRINT
-      sysout: "*"
-    - name: SYSOUT
-      sysout: "*"
-    - name: INDD
-      inline: |
-        0001TEST RECORD 1
-        0002TEST RECORD 2
-    - name: SYSIN
-      symbols: JCLONLY
-      inline: |
-        DELETE &HLQ..TEST.KSDS
-        IF LASTCC < 9 THEN -
-          DEFINE CLUSTER( -
-            NAME(&HLQ..TEST.KSDS) -
-            RECORDSIZE(80 80) -
-            CYLINDERS(2 1) -
-            CISZ(4096) -
-            INDEXED -
-            KEYS(4 0) -
-          ) -
-          DATA( -
-            NAME(&HLQ..TEST.KSDS.DATA) -
-          ) -
-          INDEX( -
-            NAME(&HLQ..TEST.KSDS.INDEX) -
-          )
-          IF LASTCC = 0 THEN -
-            REPRO INFILE(INDD) OUTDATASET(&HLQ..TEST.KSDS)
-          IF LASTCC = 0 THEN -
-            PRINT INDATASET(&HLQ..TEST.KSDS) CHAR
+    - name: Create KSDS
+      zos_data_set:
+        name: "{{ vsam_name }}"
+        type: ksds
+        state: present
+        record_length: 80
+        key_length: 4
+        key_offset: 0
+
+    - name: Check KSDS records
+      ansible.builtin.stat:
+        path: "{{ playbook_dir }}/templates/KSDS_records.txt"
+      delegate_to: localhost
+      register: ksds_file
+
+    - name: Show KSDS records file
+      ansible.builtin.debug:
+        var: ksds_file
+
+    - name: Load KSDS records
+      zos_encode:
+        src: "{{ playbook_dir }}/templates/KSDS_records.txt"
+        dest: "{{ vsam_name }}"
+        encoding:
+          from: UTF-8
+          to: IBM-1047
+
+    - name: Fetch KSDS records
+      zos_fetch:
+        src: "{{ vsam_name }}"
+        dest: "{{ playbook_dir }}/templates/KSDS_records.txt"
+        flat: true

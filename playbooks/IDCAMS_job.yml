@@ -1,0 +1,20 @@
+---
+- name: Submit resolved JCL to z/OS
+  hosts: zoslab
+  gather_facts: false
+  environment: "{{ environment_vars }}"
+  vars:
+    job_owner: IBMUSER
+    hlq: IBMUSER
+    mlq: TEMP02
+    libname: JCL 
+    primary_allocation: 2
+    secondary_allocation: 4 
+    jcl_path: "{{ playbook_dir }}/templates/IDCAMS.jcl"
+    jcl_dataset_name: "{{ job_owner }}.TEMP02.JCL"
+
+  tasks:
+    - name: Submit JCL from dataset
+      ibm.ibm_zos_core.zos_job_submit:
+        src: "{{ jcl_dataset_name }}"
+      register: job_result

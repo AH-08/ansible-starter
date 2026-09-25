@@ -10,5 +10,5 @@
     - name: Execute TSO command List Dataset(LISTDSD)
       zos_tso_command:
        commands:
-          - LISTDSD DATASET('SYS1.PARMLIB')
+          - LISTDSD DATASET('SYS1.PARMLIB') ALL GENERIC
        max_rc: 4

@@ -15,10 +15,10 @@
 
   tasks:
 
-    - name: Convert local JCL to IBM-1047 and submit the job.
-      zos_job_submit:
-        src: "{{ playbook_dir }}/IDCAMS.jcl" 
-        location: LOCAL
-        encoding:
-          from: UTF-8
-          to: IBM-1047
+   - name: Covert local JCL to IBM-1047 and submit
+     zos_job_submit:
+       src: "{{ playbook_dir }}/IDCAMS.jcl" 
+       location: LOCAL
+       encoding:
+        from: UTF-8
+        to: IBM-1047

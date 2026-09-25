@@ -34,31 +34,40 @@
     - name: Show KSDS records file
       ansible.builtin.debug:
         var: ksds_file
+    
+    - name: Copy records to input sequential data set
+      zos_copy:
+        src: "{{ playbook_dir }}/template/KSDS_records.txt"
+        dest: "{{ vsam_name }}.INPUT"
+        encoding:
+          from: UTF-8
+          to: IBM-1047
 
-    - name: Load KSDS records
+    - name: Load records into KSDS using IDCAMS REPRO
       zos_mvs_raw:
-        pgm: idcams
+        program_name: IDCAMS
         auth: true
         dds:
           - dd_data_set:
               dd_name: INPUT
-              data_set_name: "{{ vsam_name }}"
+              data_set_name: "{{ vsam_name }}.INPUT"
+              disposition: shr
+
           - dd_data_set:
               dd_name: OUTPUT
               data_set_name: "{{ vsam_name }}"
+              disposition: shr
+
           - dd_input:
-              dd_name: sysin
+              dd_name: SYSIN
               content: |
-                " REPRO -
-                  0001TEST RECORD 1 
-                  0002TEST RECORD 2"
+                REPRO -
+                  INFILE(INPUT) -
+                  OUTFILE(OUTPUT)
+
           - dd_output:
-              dd_name: sysprint
+              dd_name: SYSPRINT
               return_content:
                 type: text
 
-    - name: Fetch KSDS records
-      zos_fetch:
-        src: "{{ vsam_name }}"
-        dest: "{{ playbook_dir }}/templates/KSDS_records.txt"
-        flat: true
+      register: load_ksds_result
